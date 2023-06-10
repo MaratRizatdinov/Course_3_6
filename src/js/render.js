@@ -72,7 +72,7 @@ export function renderGamePage({ contentElement, gameStatus }) {
     if (gameCards.length === 12) level = "medium";
     if (gameCards.length === 18) level = "hard";
 
-    // Первоначально показывем полную колоду (закрытую)
+    // Первоначально показывем полную колоду (закрытую )
 
     gamePageContent = `${headerElement}
         
