@@ -5,10 +5,15 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
-    entry: "./src/js/index.js",
+    entry: "./src/js/index.ts",
     mode: process.env.NODE_ENV === "production" ? "production" : "development",
-    module: {
+    module: {        
         rules: [
+            {
+                test: /\.ts$/,
+                use: "ts-loader",
+                exclude: /node_modules/,
+              },
             {
                 test: /\.css$/i,
                 use: [MiniCssExtractPlugin.loader, "css-loader"],
@@ -23,6 +28,9 @@ module.exports = {
             },
         ],
     },
+    resolve: {
+        extensions: [".ts", ".js"],
+      },
     output: {
         path: path.resolve(__dirname, "dist"),
         filename: "bundle.js",

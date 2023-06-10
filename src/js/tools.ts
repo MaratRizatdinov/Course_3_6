@@ -2,13 +2,13 @@
 //Создает случайный массив карт в зависимости от уровня и помещает в localStorage
 
 export function createRandomCardCollection({ levelOfGame }) {
-    let fullCardCollection = [];
-    let gameCardCollection = [];
-    let cardSuite = ["s", "h", "d", "c"];
-    let cardDignity = ["A", "K", "Q", "J", "1", "9", "8", "7", "6"];
+    const fullCardCollection: any = [];
+    let gameCardCollection : any = [];
+    let cardSuite: any= ["s", "h", "d", "c"];
+    let cardDignity: any = ["A", "K", "Q", "J", "1", "9", "8", "7", "6"];
 
-    for (let suite of cardSuite) {
-        for (let dignity of cardDignity) {
+    for (const suite of cardSuite) {
+        for (const dignity of cardDignity) {
             fullCardCollection.push(dignity + suite);
         }
     }

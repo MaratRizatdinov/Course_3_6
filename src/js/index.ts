@@ -4,8 +4,8 @@ import {
     renderGamePage,
     suitePict,
     renderEndPage,
-} from "./render.js";
-import { createRandomCardCollection } from "./tools.js";
+} from "./render";
+import { createRandomCardCollection } from "./tools";
 
 let contentElement = document.querySelector(".container");
 let levelOfGame;
@@ -16,7 +16,7 @@ gameStart();
 function gameStart() {
     renderStartPage({ contentElement });
 
-    let startButton = document.querySelector(".select__startbutton");
+    let startButton: any = document.querySelector(".select__startbutton");
 
     startButton.addEventListener("click", () => {
         if (startButton.disabled === true) {
@@ -36,7 +36,7 @@ function gameStart() {
 }
 
 function gameTime() {
-    let reStartButton = document.querySelector(".header__button");
+    let reStartButton: any = document.querySelector(".header__button");
 
     reStartButton.classList.remove("global__button--disabled");
 
@@ -44,12 +44,12 @@ function gameTime() {
         gameStart();
     });
 
-    let cardsElement = document.querySelectorAll(".card__items");
+    let cardsElement: any = document.querySelectorAll(".card__items");
 
-    let controlArray = [];
+    let controlArray: any = [];
     for (let key of cardsElement) {
         key.addEventListener("click", () => {
-            let clickCard = key.dataset.suite + key.dataset.dignity;
+            let clickCard: string = key.dataset.suite + key.dataset.dignity;
             if (key.classList.contains("card__items--close"))
                 controlArray.push(clickCard);
             key.classList.remove("card__items--close");
@@ -73,21 +73,19 @@ function gameTime() {
                             gameResult,
                         });
                         setTimeout(() => {
-                            document
-                                .querySelector(".end__startbutton")
-                                .addEventListener("click", () => {
-                                    window.localStorage.removeItem("start");
-                                    window.localStorage.removeItem(
-                                        "gameStatus"
-                                    );
-                                    document
-                                        .querySelector(".end__container")
-                                        .remove();
-                                    document.querySelector(
-                                        ".container"
-                                    ).style.opacity = "1";
-                                    gameStart();
-                                });
+                            let endStartbutton: any =
+                                document.querySelector(".end__startbutton");
+                            endStartbutton.addEventListener("click", () => {
+                                window.localStorage.removeItem("start");
+                                window.localStorage.removeItem("gameStatus");
+                                let endContainer: any =
+                                    document.querySelector(".end__container");
+                                let container: any =
+                                    document.querySelector(".container");
+                                endContainer.remove();
+                                container.style.opacity = "1";
+                                gameStart();
+                            });
                         }, 1);
                     }
                 }
@@ -97,17 +95,19 @@ function gameTime() {
                     gameResult = "win";
                     renderEndPage({ contentElement, gameStatus, gameResult });
                     setTimeout(() => {
-                        document
+                        let endStartbutton: any =
+                            document.querySelector(".end__startbutton");
+                        endStartbutton
                             .querySelector(".end__startbutton")
                             .addEventListener("click", () => {
                                 window.localStorage.removeItem("start");
                                 window.localStorage.removeItem("gameStatus");
-                                document
-                                    .querySelector(".end__container")
-                                    .remove();
-                                document.querySelector(
-                                    ".container"
-                                ).style.opacity = "1";
+                                let endContainer: any =
+                                    document.querySelector(".end__container");
+                                let container: any =
+                                    document.querySelector(".end__container");
+                                endContainer.remove();
+                                container.style.opacity = "1";
                                 gameStart();
                             });
                     }, 1);

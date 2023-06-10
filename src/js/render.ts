@@ -16,8 +16,8 @@ export function renderStartPage({ contentElement }) {
                         </div>`;
     contentElement.innerHTML = selectPageContent;
 
-    let buttonElements = document.querySelectorAll(".select__levelbutton");
-    let startButton = document.querySelector(".select__startbutton");
+    let buttonElements: any = document.querySelectorAll(".select__levelbutton");
+    let startButton: any = document.querySelector(".select__startbutton");
     startButton.disabled = true;
 
     for (let key of buttonElements) {
@@ -43,14 +43,13 @@ export function renderGamePage({ contentElement, gameStatus }) {
     let level;
     let cardShirt = "close";
     //console.log(gameStatus);
+    let gameCardCollection: any =
+        window.localStorage.getItem("gameCardCollection");
+    let gameCards: any = JSON.parse(gameCardCollection);
+    let fullCardCollection: any =
+        window.localStorage.getItem("fullCardCollection");
+    let fullGameCards: any = JSON.parse(fullCardCollection);
 
-    let gameCards = JSON.parse(
-        window.localStorage.getItem("gameCardCollection")
-    );
-
-    let fullGameCards = JSON.parse(
-        window.localStorage.getItem("fullCardCollection")
-    );
     let headerElement = `<div class="header__container">
                             <div class="header__timerfield">
                                 <div class="header__timertitle">
@@ -88,7 +87,7 @@ export function renderGamePage({ contentElement, gameStatus }) {
     contentElement.innerHTML = gamePageContent;
 
     // По истечении указанного времени показываем полную колоду(открытую)
-    let pauseTime = gameStatus === "gameTime" ? 1000 : 0;
+    let pauseTime = gameStatus === "gameTime" ? 0 : 0;
 
     setTimeout(() => {
         cardShirt = "open";
@@ -118,15 +117,15 @@ export function renderGamePage({ contentElement, gameStatus }) {
     </div>`;
 
         contentElement.innerHTML = gamePageContent;
-    }, 2000);
+    }, 0);
 
     // По истечении указанного времени показываем игровую колоду(закрытую)
 
     setTimeout(() => {
         cardShirt = "close";
-        let startTimer = new Date().getTime();
+        let startTimer: number = new Date().getTime();
         //console.log(startTimer);
-        window.localStorage.setItem("start", startTimer);
+        window.localStorage.setItem("start", String(startTimer));
 
         gamePageContent = `${headerElement}
             
@@ -135,7 +134,7 @@ export function renderGamePage({ contentElement, gameStatus }) {
     </div>`;
 
         contentElement.innerHTML = gamePageContent;
-    }, 7000);
+    }, 5000);
 }
 
 export function renderEndPage({ contentElement, gameStatus, gameResult }) {
@@ -156,10 +155,11 @@ export function renderEndPage({ contentElement, gameStatus, gameResult }) {
                              <div class="end__text">Затраченное время</div>
                              <div class="end__time">${showTime()}</div>
                              <div class="end__startbutton  global__button ">Играть снова</div>`;
-        let newContent = document.querySelector(".container");
+        let newContent: any = document.querySelector(".container");
         newContent.style.opacity = "0.3";
         newContent = newContent.after(endPageContent);
-        document.querySelector(".end__container").style.opacity = "1.0";
+        let endContainer: any = document.querySelector(".end__container");
+        endContainer.style.opacity = "1.0";
     }, 0);
 }
 
@@ -237,9 +237,9 @@ export function suitePict(suite) {
 function showTime() {
     let finishTimer = new Date().getTime();
 
-    let startTimer = window.localStorage.getItem("start");
+    let startTimer: number = Number(window.localStorage.getItem("start"));
 
-    let timeToGame = Math.floor((finishTimer - +startTimer) / 1000);
+    let timeToGame = Math.floor((finishTimer - startTimer) / 1000);
 
     let secondNumber = timeToGame > 59 ? timeToGame % 60 : timeToGame;
     let firstNumber = Math.floor(timeToGame / 60);
