@@ -7,14 +7,14 @@ import {
 } from "./render";
 import { createRandomCardCollection } from "./tools";
 
-let contentElement = document.querySelector(".container");
-let levelOfGame;
+let contentElement: HTMLElement | null = document.querySelector(".container");
+let levelOfGame: string;
 let gameStatus;
 
 gameStart();
 
 function gameStart() {
-    renderStartPage({ contentElement });
+    if (contentElement !== null) renderStartPage(contentElement);
 
     let startButton: any = document.querySelector(".select__startbutton");
 
@@ -24,14 +24,15 @@ function gameStart() {
             return;
         }
 
-        levelOfGame = window.localStorage.getItem("level");
+        levelOfGame = window.localStorage.getItem("level") || "";
         gameStatus = window.localStorage.getItem("gameStatus");
 
-        createRandomCardCollection({ levelOfGame });
+        createRandomCardCollection(levelOfGame);
 
-        renderGamePage({ contentElement, gameStatus });
+        if (contentElement !== null && gameStatus !== null)
+            renderGamePage(contentElement, gameStatus);
 
-        setTimeout(() => gameTime(), 7001);
+        setTimeout(() => gameTime(), 5001);
     });
 }
 
@@ -67,11 +68,14 @@ function gameTime() {
                         window.localStorage.setItem("gameStatus", "gameEnd");
                         gameStatus = window.localStorage.getItem("gameStatus");
                         gameResult = "loss";
-                        renderEndPage({
-                            contentElement,
-                            gameStatus,
-                            gameResult,
-                        });
+                        if (contentElement !== null && gameStatus !== null) {
+                            renderEndPage(
+                                contentElement,
+                                gameStatus,
+                                gameResult
+                            );
+                        }
+
                         setTimeout(() => {
                             let endStartbutton: any =
                                 document.querySelector(".end__startbutton");
@@ -93,7 +97,9 @@ function gameTime() {
                     window.localStorage.setItem("gameStatus", "gameEnd");
                     gameStatus = window.localStorage.getItem("gameStatus");
                     gameResult = "win";
-                    renderEndPage({ contentElement, gameStatus, gameResult });
+                    if (contentElement !== null && gameStatus !== null) {
+                        renderEndPage(contentElement, gameStatus, gameResult);
+                    }
                     setTimeout(() => {
                         let endStartbutton: any =
                             document.querySelector(".end__startbutton");
@@ -117,7 +123,7 @@ function gameTime() {
     }
 }
 
-function cardPictureOnClick(key) {
+function cardPictureOnClick(key: any) {
     return `<div class ="card__firstSymbol">
                         ${
                             key.dataset.dignity === "1"

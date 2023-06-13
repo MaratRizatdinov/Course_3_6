@@ -1,6 +1,6 @@
 //----Стартовая страница----
 
-export function renderStartPage({ contentElement }) {
+export function renderStartPage(contentElement: HTMLElement) {
     window.localStorage.removeItem("level");
     window.localStorage.removeItem("gameCardCollection");
     window.localStorage.removeItem("fullCardCollection");
@@ -36,11 +36,14 @@ export function renderStartPage({ contentElement }) {
 
 //----Страница-загрузка игры----
 
-export function renderGamePage({ contentElement, gameStatus }) {
+export function renderGamePage(
+    contentElement: HTMLElement,
+    gameStatus: string
+) {
     let gamePageItems = ``;
     let fullGamePageItems = ``;
     let gamePageContent = "";
-    let level;
+    let level = "";
     let cardShirt = "close";
     //console.log(gameStatus);
     let gameCardCollection: any =
@@ -137,8 +140,8 @@ export function renderGamePage({ contentElement, gameStatus }) {
     }, 5000);
 }
 
-export function renderEndPage({ contentElement, gameStatus, gameResult }) {
-    renderGamePage({ contentElement, gameStatus });
+export function renderEndPage( contentElement: HTMLElement, gameStatus:string, gameResult:string ) {
+    renderGamePage( contentElement, gameStatus );
     setTimeout(() => {
         let endPageContent = document.createElement("div");
         endPageContent.className = "end__container global__container center";
@@ -167,7 +170,7 @@ export function renderEndPage({ contentElement, gameStatus, gameResult }) {
 
 //Функция генерирует контент игровых карт
 
-function getRenderElement(element, Arr, cardPicture, cardShirt) {
+function getRenderElement(element:string, Arr:any[], cardPicture :(a:string,b:string)=>string|undefined, cardShirt:string) {
     for (let key of Arr) {
         element =
             element +
@@ -183,7 +186,7 @@ function getRenderElement(element, Arr, cardPicture, cardShirt) {
 }
 // Функция генерирует игральную карту
 
-function cardPicture(key, cardShirt) {
+function cardPicture(key:string, cardShirt:string): string|undefined {
     if (cardShirt === "open") {
         return `<div class ="card__firstSymbol">
                         ${key[0] === "1" ? "10" : key[0]}
@@ -212,7 +215,7 @@ function cardPicture(key, cardShirt) {
 
 // Функция подставляет рисунок  масти
 
-export function suitePict(suite) {
+export function suitePict(suite:string) {
     let picture = "";
     if (suite === "s") {
         picture = '"./img/Spades.svg" alt="Пики"';
