@@ -13,6 +13,9 @@ let gameStatus: string;
 
 gameStart();
 
+// Стартовая функция. Отвечает за выбор уровня игры, создание игрового контента и время задержки
+
+
 function gameStart() {
     if (contentElement !== null) renderStartPage(contentElement);
 
@@ -35,6 +38,8 @@ function gameStart() {
     });
 }
 
+// Функция запускает процесс игры и игровой таймер
+
 function gameTime() {
     let reStartButton: any = document.querySelector(".header__button");
 
@@ -44,80 +49,11 @@ function gameTime() {
         gameStart();
     });
 
-    //-----------------------------------------------------------------------------------
-    let secundTablo = document.querySelector(
-        ".header__timercounter--sec"
-    ) as HTMLElement;
-    let secundCounter = 0;
-    let secundId = setInterval(() => {
-        let gameStatus = window.localStorage.getItem("gameStatus");
-
-        secundCounter++;
-        secundCounter >= 10 ? (secundCounter = 0) : secundCounter;
-        secundTablo.textContent = String(secundCounter);
-
-        if (gameStatus !== "gameTime") {
-            clearInterval(secundId);
-        }
-    }, 1000);
-
-    //------------------------------------------------------------------------------------
-    let deciSecundTablo = document.querySelector(
-        ".header__timercounter--decisec"
-    ) as HTMLElement;
-    let deciSecundCounter = 0;
-    let deciSecundId = setInterval(() => {
-        let gameStatus = window.localStorage.getItem("gameStatus");
-
-        deciSecundCounter++;
-        deciSecundCounter >= 6 ? (deciSecundCounter = 0) : deciSecundCounter;
-        deciSecundTablo.textContent = String(deciSecundCounter);
-
-        if (gameStatus !== "gameTime") {
-            clearInterval(deciSecundId);
-        }
-    }, 10000);
-
-    //--------------------------------------------------------------------------------------
-
-    let minuteTablo = document.querySelector(
-        ".header__timercounter--min"
-    ) as HTMLElement;
-    let minuteCounter = 0;
-    let minuteId = setInterval(() => {
-        let gameStatus = window.localStorage.getItem("gameStatus");
-
-        minuteCounter++;
-        minuteCounter >= 10 ? (minuteCounter = 0) : minuteCounter;
-        minuteTablo.textContent = String(minuteCounter);
-
-        if (gameStatus !== "gameTime") {
-            clearInterval(minuteId);
-        }
-    }, 60000);
-
-    //----------------------------------------------------------------------------------------
-    let deciMinuteTablo = document.querySelector(
-        ".header__timercounter--decimin"
-    ) as HTMLElement;
-    let deciMinuteCounter = 0;
-    let deciMinuteId = setInterval(() => {
-        let gameStatus = window.localStorage.getItem("gameStatus");
-
-        deciMinuteCounter++;
-        deciMinuteCounter >= 10 ? (deciMinuteCounter = 0) : deciMinuteCounter;
-        deciMinuteTablo.textContent = String(deciMinuteCounter);
-
-        if (gameStatus !== "gameTime") {
-            clearInterval(deciMinuteId);
-        }
-    }, 600000);
-
-    //------------------------------------------------------------------------------------
+    startHeaderTimer();
 
     let cardsElement: any = document.querySelectorAll(".card__items");
 
-    let controlArray: any = [];
+    let controlArray: string[] = [];
     for (let key of cardsElement) {
         key.addEventListener("click", () => {
             let clickCard: string = key.dataset.suite + key.dataset.dignity;
@@ -157,6 +93,8 @@ function gameTime() {
     }
 }
 
+// Функция- переворот карты при клике на нее
+
 function cardPictureOnClick(key: any): string {
     return `<div class ="card__firstSymbol">
                         ${
@@ -184,17 +122,101 @@ function cardPictureOnClick(key: any): string {
                         }
                     </div>`;
 }
+
+// Функция -клик на кнопку "Играть снова"
+
 function onClickToEndButton() {
     setTimeout(() => {
         let endStartbutton: any = document.querySelector(".end__startbutton");
         endStartbutton.addEventListener("click", () => {
             window.localStorage.removeItem("start");
             window.localStorage.removeItem("gameStatus");
-            let endContainer: any = document.querySelector(".end__container");
+            let endContainer = document.querySelector(
+                ".end__container"
+            ) as HTMLElement;
             let container: any = document.querySelector(".container");
             endContainer.remove();
             container.style.opacity = "1";
             gameStart();
         });
     }, 1);
+}
+
+// Функция- таймер игры
+
+function startHeaderTimer() {
+
+    //  таймер секунд
+
+    let secundTablo = document.querySelector(
+        ".header__timercounter--sec"
+    ) as HTMLElement;
+    let secundCounter = 0;
+    let secundId = setInterval(() => {
+        let gameStatus = window.localStorage.getItem("gameStatus");
+
+        secundCounter++;
+        secundCounter >= 10 ? (secundCounter = 0) : secundCounter;
+        secundTablo.textContent = String(secundCounter);
+
+        if (gameStatus !== "gameTime") {
+            clearInterval(secundId);
+        }
+    }, 1000);
+
+    //  таймер десятков секунд
+
+    let deciSecundTablo = document.querySelector(
+        ".header__timercounter--decisec"
+    ) as HTMLElement;
+    let deciSecundCounter = 0;
+    let deciSecundId = setInterval(() => {
+        let gameStatus = window.localStorage.getItem("gameStatus");
+
+        deciSecundCounter++;
+        deciSecundCounter >= 6 ? (deciSecundCounter = 0) : deciSecundCounter;
+        deciSecundTablo.textContent = String(deciSecundCounter);
+
+        if (gameStatus !== "gameTime") {
+            clearInterval(deciSecundId);
+        }
+    }, 10000);
+
+    //  таймер минут
+
+    let minuteTablo = document.querySelector(
+        ".header__timercounter--min"
+    ) as HTMLElement;
+    let minuteCounter = 0;
+    let minuteId = setInterval(() => {
+        let gameStatus = window.localStorage.getItem("gameStatus");
+
+        minuteCounter++;
+        minuteCounter >= 10 ? (minuteCounter = 0) : minuteCounter;
+        minuteTablo.textContent = String(minuteCounter);
+
+        if (gameStatus !== "gameTime") {
+            clearInterval(minuteId);
+        }
+    }, 60000);
+
+    //  таймер десятков минут
+
+    let deciMinuteTablo = document.querySelector(
+        ".header__timercounter--decimin"
+    ) as HTMLElement;
+    let deciMinuteCounter = 0;
+    let deciMinuteId = setInterval(() => {
+        let gameStatus = window.localStorage.getItem("gameStatus");
+
+        deciMinuteCounter++;
+        deciMinuteCounter >= 10 ? (deciMinuteCounter = 0) : deciMinuteCounter;
+        deciMinuteTablo.textContent = String(deciMinuteCounter);
+
+        if (gameStatus !== "gameTime") {
+            clearInterval(deciMinuteId);
+        }
+    }, 600000);
+
+    //------------------------------------------------------------------------------------
 }

@@ -46,13 +46,10 @@ export function renderGamePage(
     let gamePageContent = "";
     let level = "";
     let cardShirt = "close";
-    //console.log(gameStatus);
-    let gameCardCollection: any =
-        window.localStorage.getItem("gameCardCollection");
-    let gameCards: any = JSON.parse(gameCardCollection);
-    let fullCardCollection: any =
-        window.localStorage.getItem("fullCardCollection");
-    let fullGameCards: any = JSON.parse(fullCardCollection);
+    let gameCardCollection = window.localStorage.getItem("gameCardCollection") as string;
+    let gameCards: string[] = JSON.parse(gameCardCollection);
+    let fullCardCollection = window.localStorage.getItem("fullCardCollection") as string;
+    let fullGameCards: string[] = JSON.parse(fullCardCollection);
 
     let headerElement = `<div class="header__container">
                             <div class="header__timerfield">
@@ -88,7 +85,7 @@ export function renderGamePage(
         )}
     </div>`;
 
-    //contentElement.innerHTML = gamePageContent;
+    
 
     // По истечении указанного времени показываем полную колоду(открытую)
     let pauseTime = gameStatus === "gameTime" ? 0 : 0;
@@ -108,7 +105,7 @@ export function renderGamePage(
         if (gameStatus !== "gameTime") {
             contentElement.innerHTML = gamePageContent;
         }
-        //contentElement.innerHTML = gamePageContent;
+        
     }, pauseTime);
 
     if (gameStatus !== "gameTime") return contentElement;
@@ -170,7 +167,7 @@ export function renderEndPage(
         let newContent: any = document.querySelector(".container");
         newContent.style.opacity = "0.3";
         newContent = newContent.after(endPageContent);
-        let endContainer: any = document.querySelector(".end__container");
+        let endContainer = document.querySelector(".end__container") as HTMLElement;
         endContainer.style.opacity = "1.0";
     }, 0);
 }
@@ -181,7 +178,7 @@ export function renderEndPage(
 
 function getRenderElement(
     element: string,
-    Arr: any[],
+    Arr: string[],
     cardPicture: (a: string, b: string) => string | undefined,
     cardShirt: string
 ) {
@@ -260,11 +257,12 @@ function showFinalTime(): string {
     let fullTimer = addZero(firstNumber) + "." + addZero(secondNumber);
     return fullTimer;
 }
-
+// Вспомогательная функция для showFinalTime()
 function calculateTime(): number {
     return new Date().getTime() - Number(window.localStorage.getItem("start"));
 }
 
+// Вспомогательная функция для showFinalTime()
 function addZero(symbol: number): string {
     return symbol > 9 ? String(symbol) : "0" + String(symbol);
 }
