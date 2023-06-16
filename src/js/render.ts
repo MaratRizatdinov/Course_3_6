@@ -4,6 +4,7 @@ export function renderStartPage(contentElement: HTMLElement) {
     window.localStorage.removeItem("level");
     window.localStorage.removeItem("gameCardCollection");
     window.localStorage.removeItem("fullCardCollection");
+    window.localStorage.removeItem("gameStatus");
 
     let selectPageContent = `<div class="select__container global__container">
                             <div class="select__title">Выбери сложность</div>
@@ -87,7 +88,7 @@ export function renderGamePage(
         )}
     </div>`;
 
-    contentElement.innerHTML = gamePageContent;
+    //contentElement.innerHTML = gamePageContent;
 
     // По истечении указанного времени показываем полную колоду(открытую)
     let pauseTime = gameStatus === "gameTime" ? 0 : 0;
@@ -104,8 +105,10 @@ export function renderGamePage(
             cardShirt
         )}
     </div>`;
-
-        contentElement.innerHTML = gamePageContent;
+        if (gameStatus !== "gameTime") {
+            contentElement.innerHTML = gamePageContent;
+        }
+        //contentElement.innerHTML = gamePageContent;
     }, pauseTime);
 
     if (gameStatus !== "gameTime") return contentElement;
@@ -127,7 +130,7 @@ export function renderGamePage(
     setTimeout(() => {
         cardShirt = "close";
         let startTimer: number = new Date().getTime();
-        //console.log(startTimer);
+
         window.localStorage.setItem("start", String(startTimer));
 
         gamePageContent = `${headerElement}
@@ -140,8 +143,14 @@ export function renderGamePage(
     }, 5000);
 }
 
-export function renderEndPage( contentElement: HTMLElement, gameStatus:string, gameResult:string ) {
-    renderGamePage( contentElement, gameStatus );
+// Функция генерирует блок результата игры
+
+export function renderEndPage(
+    contentElement: HTMLElement,
+    gameStatus: string,
+    gameResult: string
+) {
+    renderGamePage(contentElement, gameStatus);
     setTimeout(() => {
         let endPageContent = document.createElement("div");
         endPageContent.className = "end__container global__container center";
@@ -156,7 +165,7 @@ export function renderEndPage( contentElement: HTMLElement, gameStatus:string, g
                                      : "Вы проиграли!"
                              }</div>
                              <div class="end__text">Затраченное время</div>
-                             <div class="end__time">${showTime()}</div>
+                             <div class="end__time">${showFinalTime()}</div>
                              <div class="end__startbutton  global__button ">Играть снова</div>`;
         let newContent: any = document.querySelector(".container");
         newContent.style.opacity = "0.3";
@@ -170,7 +179,12 @@ export function renderEndPage( contentElement: HTMLElement, gameStatus:string, g
 
 //Функция генерирует контент игровых карт
 
-function getRenderElement(element:string, Arr:any[], cardPicture :(a:string,b:string)=>string|undefined, cardShirt:string) {
+function getRenderElement(
+    element: string,
+    Arr: any[],
+    cardPicture: (a: string, b: string) => string | undefined,
+    cardShirt: string
+) {
     for (let key of Arr) {
         element =
             element +
@@ -186,7 +200,7 @@ function getRenderElement(element:string, Arr:any[], cardPicture :(a:string,b:st
 }
 // Функция генерирует игральную карту
 
-function cardPicture(key:string, cardShirt:string): string|undefined {
+function cardPicture(key: string, cardShirt: string): string | undefined {
     if (cardShirt === "open") {
         return `<div class ="card__firstSymbol">
                         ${key[0] === "1" ? "10" : key[0]}
@@ -215,7 +229,7 @@ function cardPicture(key:string, cardShirt:string): string|undefined {
 
 // Функция подставляет рисунок  масти
 
-export function suitePict(suite:string) {
+export function suitePict(suite: string): string | undefined {
     let picture = "";
     if (suite === "s") {
         picture = '"./img/Spades.svg" alt="Пики"';
@@ -237,21 +251,22 @@ export function suitePict(suite:string) {
 
 // Функция - таймер
 
-function showTime() {
-    let finishTimer = new Date().getTime();
-
-    let startTimer: number = Number(window.localStorage.getItem("start"));
-
-    let timeToGame = Math.floor((finishTimer - startTimer) / 1000);
+function showFinalTime(): string {
+    let timeToGame = Math.floor(calculateTime() / 1000);
 
     let secondNumber = timeToGame > 59 ? timeToGame % 60 : timeToGame;
     let firstNumber = Math.floor(timeToGame / 60);
 
-    let secondSymbol =
-        secondNumber > 9 ? String(secondNumber) : "0" + String(secondNumber);
-    let firstSymbol =
-        firstNumber > 9 ? String(firstNumber) : "0" + String(firstNumber);
-
-    let fullTimer = firstSymbol + "." + secondSymbol;
+    let fullTimer = addZero(firstNumber) + "." + addZero(secondNumber);
     return fullTimer;
 }
+
+function calculateTime(): number {
+    return new Date().getTime() - Number(window.localStorage.getItem("start"));
+}
+
+function addZero(symbol: number): string {
+    return symbol > 9 ? String(symbol) : "0" + String(symbol);
+}
+
+
