@@ -39,3 +39,7 @@ export function createRandomCardCollection( levelOfGame:string ='' ) {
 function shuffle(array: string[] = []) {
     array.sort(() => Math.random() - 0.5);
 }
+function summa(a:number,b:number){
+    return a+b;
+}
+console.log(summa(150,15));

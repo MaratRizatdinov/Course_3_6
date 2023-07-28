@@ -263,7 +263,7 @@ function calculateTime(): number {
 }
 
 // Вспомогательная функция для showFinalTime()
-function addZero(symbol: number): string {
+export function addZero(symbol: number): string {
     return symbol > 9 ? String(symbol) : "0" + String(symbol);
 }
 
