@@ -35,7 +35,7 @@ export function renderStartPage(contentElement: HTMLElement) {
     }
 }
 
-//----Страница-загрузка игры----
+//----Страница-загрузка  игры----
 
 export function renderGamePage(
     contentElement: HTMLElement,
