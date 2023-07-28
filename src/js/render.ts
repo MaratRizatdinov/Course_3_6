@@ -37,7 +37,7 @@ export function renderStartPage(contentElement: HTMLElement) {
 
 //----Страница-загрузка игры----
 
-export faunction renderGamePage(
+export function renderGamePage(
     contentElement: HTMLElement,
     gameStatus: string
 ) {
