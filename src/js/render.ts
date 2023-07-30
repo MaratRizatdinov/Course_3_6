@@ -6,7 +6,7 @@ export function renderStartPage(contentElement: HTMLElement) {
     window.localStorage.removeItem("fullCardCollection");
     window.localStorage.removeItem("gameStatus");
 
-    let selectPageContent = `<div class="select__container global__container">
+    const selectPageContent = `<div class="select__container global__container">
                             <div class="select__title">Выбери сложность</div>
                             <div class="select__levelsbox">
                                 <div class ="select__levelbutton">1</div>
@@ -17,13 +17,13 @@ export function renderStartPage(contentElement: HTMLElement) {
                         </div>`;
     contentElement.innerHTML = selectPageContent;
 
-    let buttonElements: any = document.querySelectorAll(".select__levelbutton");
-    let startButton: any = document.querySelector(".select__startbutton");
+    const buttonElements: any = document.querySelectorAll(".select__levelbutton");
+    const startButton: any = document.querySelector(".select__startbutton");
     startButton.disabled = true;
 
-    for (let key of buttonElements) {
+    for (const key of buttonElements) {
         key.addEventListener("click", () => {
-            for (let key of buttonElements) {
+            for (const key of buttonElements) {
                 key.classList.remove("select__levelbutton--active");
             }
             key.classList.add("select__levelbutton--active");
@@ -41,17 +41,17 @@ export function renderGamePage(
     contentElement: HTMLElement,
     gameStatus: string
 ) {
-    let gamePageItems = ``;
-    let fullGamePageItems = ``;
+    const gamePageItems = ``;
+    const fullGamePageItems = ``;
     let gamePageContent = "";
     let level = "";
     let cardShirt = "close";
-    let gameCardCollection = window.localStorage.getItem("gameCardCollection") as string;
-    let gameCards: string[] = JSON.parse(gameCardCollection);
-    let fullCardCollection = window.localStorage.getItem("fullCardCollection") as string;
-    let fullGameCards: string[] = JSON.parse(fullCardCollection);
+    const gameCardCollection = window.localStorage.getItem("gameCardCollection") as string;
+    const gameCards: string[] = JSON.parse(gameCardCollection);
+    const fullCardCollection = window.localStorage.getItem("fullCardCollection") as string;
+    const fullGameCards: string[] = JSON.parse(fullCardCollection);
 
-    let headerElement = `<div class="header__container">
+    const headerElement = `<div class="header__container">
                             <div class="header__timerfield">
                                 <div class="header__timertitle">
                                     <div class="header__timernamemin">min</div>
@@ -88,7 +88,7 @@ export function renderGamePage(
     
 
     // По истечении указанного времени показываем полную колоду(открытую)
-    let pauseTime = gameStatus === "gameTime" ? 0 : 0;
+    const pauseTime = gameStatus === "gameTime" ? 0 : 0;
 
     setTimeout(() => {
         cardShirt = "open";
@@ -126,7 +126,7 @@ export function renderGamePage(
 
     setTimeout(() => {
         cardShirt = "close";
-        let startTimer: number = new Date().getTime();
+        const startTimer: number = new Date().getTime();
 
         window.localStorage.setItem("start", String(startTimer));
 
@@ -149,7 +149,7 @@ export function renderEndPage(
 ) {
     renderGamePage(contentElement, gameStatus);
     setTimeout(() => {
-        let endPageContent = document.createElement("div");
+        const endPageContent = document.createElement("div");
         endPageContent.className = "end__container global__container center";
         endPageContent.innerHTML = `<div class="end__img"><img src=${
             gameResult === "win"
@@ -167,7 +167,7 @@ export function renderEndPage(
         let newContent: any = document.querySelector(".container");
         newContent.style.opacity = "0.3";
         newContent = newContent.after(endPageContent);
-        let endContainer = document.querySelector(".end__container") as HTMLElement;
+        const endContainer = document.querySelector(".end__container") as HTMLElement;
         endContainer.style.opacity = "1.0";
     }, 0);
 }
@@ -182,7 +182,7 @@ function getRenderElement(
     cardPicture: (a: string, b: string) => string | undefined,
     cardShirt: string
 ) {
-    for (let key of Arr) {
+    for (const key of Arr) {
         element =
             element +
             `<div class ='card__items card__items--${cardShirt}'
@@ -249,12 +249,12 @@ export function suitePict(suite: string): string | undefined {
 // Функция - таймер
 
 function showFinalTime(): string {
-    let timeToGame = Math.floor(calculateTime() / 1000);
+    const timeToGame = Math.floor(calculateTime() / 1000);
 
-    let secondNumber = timeToGame > 59 ? timeToGame % 60 : timeToGame;
-    let firstNumber = Math.floor(timeToGame / 60);
+    const secondNumber = timeToGame > 59 ? timeToGame % 60 : timeToGame;
+    const firstNumber = Math.floor(timeToGame / 60);
 
-    let fullTimer = addZero(firstNumber) + "." + addZero(secondNumber);
+    const fullTimer = addZero(firstNumber) + "." + addZero(secondNumber);
     return fullTimer;
 }
 // Вспомогательная функция для showFinalTime()

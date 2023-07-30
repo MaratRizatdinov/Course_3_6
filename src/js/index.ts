@@ -7,7 +7,7 @@ import {
 } from "./render";
 import { createRandomCardCollection } from "./tools";
 
-let contentElement = document.querySelector(".container") as HTMLElement;
+const contentElement = document.querySelector(".container") as HTMLElement;
 let levelOfGame: string;
 let gameStatus: string;
 
@@ -18,8 +18,8 @@ gameStart();
 
 function gameStart() {
     if (contentElement !== null) renderStartPage(contentElement);
-
-    let startButton: any = document.querySelector(".select__startbutton");
+    
+    const startButton: any = document.querySelector(".select__startbutton");
 
     startButton.addEventListener("click", () => {
         if (startButton.disabled === true) {
@@ -41,7 +41,7 @@ function gameStart() {
 // Функция запускает процесс игры и игровой таймер
 
 function gameTime() {
-    let reStartButton: any = document.querySelector(".header__button");
+    const reStartButton: any = document.querySelector(".header__button");
 
     reStartButton.classList.remove("global__button--disabled");
 
@@ -51,12 +51,12 @@ function gameTime() {
 
     startHeaderTimer();
 
-    let cardsElement: any = document.querySelectorAll(".card__items");
+    const cardsElement: any = document.querySelectorAll(".card__items");
 
-    let controlArray: string[] = [];
-    for (let key of cardsElement) {
+    const controlArray: string[] = [];
+    for (const key of cardsElement) {
         key.addEventListener("click", () => {
-            let clickCard: string = key.dataset.suite + key.dataset.dignity;
+            const clickCard: string = key.dataset.suite + key.dataset.dignity;
             if (key.classList.contains("card__items--close"))
                 controlArray.push(clickCard);
             key.classList.remove("card__items--close");
@@ -127,14 +127,14 @@ function cardPictureOnClick(key: any): string {
 
 function onClickToEndButton() {
     setTimeout(() => {
-        let endStartbutton: any = document.querySelector(".end__startbutton");
+        const endStartbutton: any = document.querySelector(".end__startbutton");
         endStartbutton.addEventListener("click", () => {
             window.localStorage.removeItem("start");
             window.localStorage.removeItem("gameStatus");
-            let endContainer = document.querySelector(
+            const endContainer = document.querySelector(
                 ".end__container"
             ) as HTMLElement;
-            let container: any = document.querySelector(".container");
+            const container: any = document.querySelector(".container");
             endContainer.remove();
             container.style.opacity = "1";
             gameStart();
@@ -148,12 +148,12 @@ function startHeaderTimer() {
 
     //  таймер секунд
 
-    let secundTablo = document.querySelector(
+    const secundTablo = document.querySelector(
         ".header__timercounter--sec"
     ) as HTMLElement;
     let secundCounter = 0;
-    let secundId = setInterval(() => {
-        let gameStatus = window.localStorage.getItem("gameStatus");
+    const secundId = setInterval(() => {
+        const gameStatus = window.localStorage.getItem("gameStatus");
 
         secundCounter++;
         secundCounter >= 10 ? (secundCounter = 0) : secundCounter;
@@ -166,12 +166,12 @@ function startHeaderTimer() {
 
     //  таймер десятков секунд
 
-    let deciSecundTablo = document.querySelector(
+    const deciSecundTablo = document.querySelector(
         ".header__timercounter--decisec"
     ) as HTMLElement;
     let deciSecundCounter = 0;
-    let deciSecundId = setInterval(() => {
-        let gameStatus = window.localStorage.getItem("gameStatus");
+    const deciSecundId = setInterval(() => {
+        const gameStatus = window.localStorage.getItem("gameStatus");
 
         deciSecundCounter++;
         deciSecundCounter >= 6 ? (deciSecundCounter = 0) : deciSecundCounter;
@@ -184,12 +184,12 @@ function startHeaderTimer() {
 
     //  таймер минут
 
-    let minuteTablo = document.querySelector(
+    const minuteTablo = document.querySelector(
         ".header__timercounter--min"
     ) as HTMLElement;
     let minuteCounter = 0;
-    let minuteId = setInterval(() => {
-        let gameStatus = window.localStorage.getItem("gameStatus");
+    const minuteId = setInterval(() => {
+        const gameStatus = window.localStorage.getItem("gameStatus");
 
         minuteCounter++;
         minuteCounter >= 10 ? (minuteCounter = 0) : minuteCounter;
@@ -202,12 +202,12 @@ function startHeaderTimer() {
 
     //  таймер десятков минут
 
-    let deciMinuteTablo = document.querySelector(
+    const deciMinuteTablo = document.querySelector(
         ".header__timercounter--decimin"
     ) as HTMLElement;
     let deciMinuteCounter = 0;
-    let deciMinuteId = setInterval(() => {
-        let gameStatus = window.localStorage.getItem("gameStatus");
+    const deciMinuteId = setInterval(() => {
+        const gameStatus = window.localStorage.getItem("gameStatus");
 
         deciMinuteCounter++;
         deciMinuteCounter >= 10 ? (deciMinuteCounter = 0) : deciMinuteCounter;

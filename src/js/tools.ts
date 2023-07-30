@@ -4,8 +4,8 @@
 export function createRandomCardCollection( levelOfGame:string ='' ) {
     const fullCardCollection: string[] = [];
     let gameCardCollection: string[] = [];
-    let cardSuite: string[] = ["s", "h", "d", "c"];
-    let cardDignity: string[] = ["A", "K", "Q", "J", "1", "9", "8", "7", "6"];
+    const cardSuite: string[] = ["s", "h", "d", "c"];
+    const cardDignity: string[] = ["A", "K", "Q", "J", "1", "9", "8", "7", "6"];
 
     for (const suite of cardSuite) {
         for (const dignity of cardDignity) {
