@@ -224,7 +224,7 @@ function cardPicture(key: string, cardShirt: string): string | undefined {
     }
 }
 
-// Функция подставляет рисунок  масти
+// Функция подставляет рисунок масти
 
 export function suitePict(suite: string): string | undefined {
     let picture = "";
