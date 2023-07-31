@@ -246,7 +246,7 @@ export function suitePict(suite: string): string | undefined {
     }
 }
 
-// Функция - таймерa
+// Функция - таймер
 
 function showFinalTime(): string {
     const timeToGame = Math.floor(calculateTime() / 1000);
