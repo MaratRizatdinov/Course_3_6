@@ -1,0 +1,31 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "parser": "@typescript-eslint/parser",
+    
+    "extends": ["eslint:recommended", "prettier", "plugin:@typescript-eslint/eslint-recommended","plugin:@typescript-eslint/recommended","plugin:@typescript-eslint/recommended-requiring-type-checking"],
+    "plugins": ["prettier", "@typescript-eslint"],
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module",
+        "allowImportExportEverywhere": true,
+        "project": "tsconfig.json",
+		"tsconfigRootDir": "."
+
+    },
+    "rules": {
+        //"prettier/prettier": "error",
+        "camelcase": ["error"],
+        "strict": "error",
+        //"eqeqeq": ["error", "always"]
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-argument": "off"
+        
+    }
+}
